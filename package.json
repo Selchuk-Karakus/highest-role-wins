@@ -1,0 +1,24 @@
+{
+  "name": "highest-role-wins",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Selchuk-Karakus/highest-role-wins.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Selchuk-Karakus/highest-role-wins/issues"
+  },
+  "homepage": "https://github.com/Selchuk-Karakus/highest-role-wins#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "lodash": "^4.17.21"
+  }
+}
