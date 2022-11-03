@@ -1,12 +1,11 @@
-const http = require("http");
-const fs = require("fs");
+const express = require("express");
+const app = express();
+const PORT = 8080;
 
-function req(request, response) {
-  fs.readFile("index.html", function (err, data) {
-    response.writeHead(200, { "Content-Type": "text/html" });
-    response.write(data);
-    response.end();
-  });
-}
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
 
-http.createServer(req).listen(8080);
+app.listen(PORT, () => {
+  console.log("Listening to server on ", +PORT);
+});
