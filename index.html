@@ -1,12 +1,39 @@
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Highest Role Wins</title>
 </head>
+
 <body>
   <h1>Welcome!!!</h1>
   <p>JavaScript is so powerful!</p>
+  <button>Click</button>
+  <div class="container">
+
+  </div>
+  <script>
+    const btnEl = document.querySelector("button")
+    const containerEl = document.querySelector(".container")
+    btnEl.addEventListener("click", listUsers)
+
+    function listUsers() {
+      fetch("users")
+        .then((response) => response.json())
+        .then((data) => {
+          containerEl.innerHTML = `<h1>users</h1>`
+          data.forEach((person) => {
+
+            let div = document.createElement("div");
+            div.textContent = `user: ${person.user} password: ${person.password}`
+            containerEl.appendChild(div)
+          })
+        })
+
+    }
+  </script>
 </body>
+
 </html>
