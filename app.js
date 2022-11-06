@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 const PORT = 8080;
-const usersData = require("./data/users-data.json");
 const bodyParser = require("body-parser");
 
 app.use(
@@ -16,8 +15,11 @@ app.get("/", (req, res) => {
   res.sendFile("index.html");
 });
 
-app.get("/users", (req, res) => {
-  res.send(usersData);
+app.post("/login", (req, res) => {
+  let userName = req.body.username;
+  let password = req.body.password;
+  console.log(`Username: ${userName} Password: ${password}`);
+  res.json({ status: true });
 });
 
 app.listen(PORT, () => {
