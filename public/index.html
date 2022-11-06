@@ -9,30 +9,31 @@
 
 <body>
   <h1>Welcome!!!</h1>
-  <p>JavaScript is so powerful!</p>
-  <button>Click</button>
-  <div class="container">
-
-  </div>
+  <form action="login" method="post">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username">
+    <label for="pass">Password</label>
+    <input type="password" id="pass" name="password" minlength="5" required>
+    <input type="submit" id="btn" value="Submit">
+  </form>
   <script>
-    const btnEl = document.querySelector("button")
-    const containerEl = document.querySelector(".container")
-    btnEl.addEventListener("click", listUsers)
+    const btnEl = document.querySelector("#btn");
+    btnEl.addEventListener("click", (event) => {
+      event.preventDefault()
+      const formData = new FormData(document.forms[0]);
+      const searchParams = new URLSearchParams();
 
-    function listUsers() {
-      fetch("users")
-        .then((response) => response.json())
-        .then((data) => {
-          containerEl.innerHTML = `<h1>users</h1>`
-          data.forEach((person) => {
-
-            let div = document.createElement("div");
-            div.textContent = `user: ${person.user} password: ${person.password}`
-            containerEl.appendChild(div)
-          })
-        })
-
-    }
+      for (let val of formData) {
+        console.log(val)
+        searchParams.append(val[0], val[1])
+      }
+      fetch("\login", {
+        method: "post",
+        body: searchParams
+      })
+        .then(res => res.json())
+        .then(data => console.log(data))
+    })
   </script>
 </body>
 
