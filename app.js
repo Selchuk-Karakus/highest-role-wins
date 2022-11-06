@@ -10,10 +10,10 @@ app.use(
   })
 );
 app.use(bodyParser.json());
-app.use(express.static(__dirname));
+app.use(express.static(__dirname + "/public"));
 
 app.get("/", (req, res) => {
-  res.send(__dirname + "index.html");
+  res.sendFile("index.html");
 });
 
 app.get("/users", (req, res) => {
