@@ -8,31 +8,18 @@
 </head>
 
 <body>
-  <h1>Welcome!!!</h1>
-  <form action="login" method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username">
-    <label for="pass">Password</label>
-    <input type="password" id="pass" name="password" minlength="5" required>
-    <input type="submit" id="btn" value="Submit">
-  </form>
+  <h1>Welcome to Browser side JavaScript!!!</h1>
+  <label>Player Name:</label>
+  <input name="user" type="text" value="Selchuk">
+  <button id="btn">Roll</button>
+  <script src="socket.io/socket.io.js"></script>
   <script>
+    const socket = io()
+    const user = document.querySelector(`input[name="user"]`)
     const btnEl = document.querySelector("#btn");
     btnEl.addEventListener("click", (event) => {
       event.preventDefault()
-      const formData = new FormData(document.forms[0]);
-      const searchParams = new URLSearchParams();
-
-      for (let val of formData) {
-        console.log(val)
-        searchParams.append(val[0], val[1])
-      }
-      fetch("\login", {
-        method: "post",
-        body: searchParams
-      })
-        .then(res => res.json())
-        .then(data => console.log(data))
+      socket.emit("player", user.value)
     })
   </script>
 </body>
