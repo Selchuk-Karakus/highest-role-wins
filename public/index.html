@@ -11,23 +11,25 @@
     <h1>Welcome to Browser side JavaScript!!!</h1>
     <label>Player Name:</label>
     <input name="user" type="text" value="Selchuk">
-    <button id="btn">Join</button>
+    <button id="btnJoin">Join</button>
+    <button id="btnRoll">Roll</button>
     <div class="userList"></div>
     <script src="socket.io/socket.io.js"></script>
     <script>
-        const socket = io()
+        const socket = io();
         const user = document.querySelector(`input[name="user"]`);
-        const btnEl = document.querySelector("#btn");
+        const btnJoinEl = document.querySelector("#btnJoin");
+        const btnRollEl = document.querySelector("#btnRoll");
         const userList = document.querySelector(".userList");
 
-        btnEl.addEventListener("click", (event) => {
+        btnJoinEl.addEventListener("click", (event) => {
             event.preventDefault();
 
             let id = `player_${Math.floor(Date.now() * Math.random())}`;
             console.log(id)
             socket.emit("new player", id, user.value);
             const listPlayers = (players) => {
-                console.log(players)
+                console.log(players);
             }
             socket.on("players", listPlayers);
         })
