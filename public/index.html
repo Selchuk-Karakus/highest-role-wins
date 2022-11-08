@@ -37,6 +37,11 @@
             }
             socket.on("players", listPlayers);
         })
+
+        btnRollEl.addEventListener("click", () => {
+            socket.emit("roll");
+            btnRollEl.disabled = true;
+        })
     </script>
 </body>
 
