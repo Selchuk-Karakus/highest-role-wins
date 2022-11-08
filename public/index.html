@@ -12,7 +12,7 @@
     <label>Player Name:</label>
     <input name="user" type="text" value="Selchuk">
     <button id="btnJoin">Join</button>
-    <button id="btnRoll">Roll</button>
+    <button id="btnRoll" style="display: none">Roll</button>
     <div class="userList"></div>
     <script src="socket.io/socket.io.js"></script>
     <script>
@@ -28,6 +28,9 @@
             let id = `player_${Math.floor(Date.now() * Math.random())}`;
             console.log(id)
             socket.emit("new player", id, user.value);
+            user.style.display = "none";
+            btnJoinEl.style.display = "none";
+            btnRollEl.style.display = "inline-block"
             const listPlayers = (players) => {
                 console.log(players);
             }
