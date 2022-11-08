@@ -9,7 +9,7 @@
 
 <body>
     <h1>Welcome to Browser side JavaScript!!!</h1>
-    <label>Player Name:</label>
+    <label>Player Name: <span id="userName"></span></label>
     <input name="user" type="text" value="Selchuk">
     <button id="btnJoin">Join</button>
     <button id="btnRoll" style="display: none">Roll</button>
@@ -31,6 +31,7 @@
             user.style.display = "none";
             btnJoinEl.style.display = "none";
             btnRollEl.style.display = "inline-block"
+            userName.textContent = user.value;
             const listPlayers = (players) => {
                 console.log(players);
             }
