@@ -4,6 +4,7 @@ const PORT = 8080;
 const bodyParser = require("body-parser");
 const http = require("http").Server(app);
 const socket = require("socket.io")(http);
+let players = [];
 
 app.use(
   bodyParser.urlencoded({
@@ -17,10 +18,13 @@ app.get("/", (req, res) => {
   res.sendFile("index.html");
 });
 
-socket.on("connection", (e) => {
-  console.log("Ready to use socket");
-  e.on("player", (id) => {
-    console.log(id);
+socket.on("connection", (socket) => {
+  socket.on("new player", (id, name) => {
+    players.push({
+      id,
+      name,
+    });
+    socket.emit("players", players);
   });
 });
 
