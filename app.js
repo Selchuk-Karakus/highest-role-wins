@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const http = require("http").Server(app);
 const socket = require("socket.io")(http);
 let players = [];
+let round = 0;
 
 app.use(
   bodyParser.urlencoded({
@@ -23,6 +24,9 @@ socket.on("connection", (socket) => {
     players.push({
       id,
       name,
+      round,
+      roll: null,
+      winner: false,
     });
     socket.emit("players", players);
   });
