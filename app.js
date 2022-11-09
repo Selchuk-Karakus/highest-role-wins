@@ -4,7 +4,7 @@ const PORT = 8080;
 const bodyParser = require("body-parser");
 const http = require("http").Server(app);
 const socket = require("socket.io")(http);
-const lodash = require("lodash")
+const lodash = require("lodash");
 
 let players = [];
 let round = 0;
@@ -34,10 +34,18 @@ socket.on("connection", (socket) => {
     socket.emit("players", players);
   });
 
+  socket.on("disconnect", (reason) => {
+    players = players.filter((player) => {
+      return players !== userId;
+    });
+    socket.emit("players", players);
+  });
+
   socket.on("roll", () => {
-    userId.roll = lodash.random(1, 1000)
-    console.log(userId)
-  })
+    userId.roll = lodash.random(1, 1000);
+    console.log(userId);
+  });
+  socket.emit("players", players);
 });
 
 const server = http.listen(PORT, () => {
