@@ -37,8 +37,9 @@ io.on("connection", (socket) => {
   socket.on("disconnect", (reason) => {
     console.log(reason)
     players = players.filter((player) => {
-      return players !== userId;
+      return player !== userId;
     });
+    io.emit("players", players);
   });
 
   socket.on("roll", () => {
