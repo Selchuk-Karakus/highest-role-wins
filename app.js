@@ -3,7 +3,7 @@ const app = express();
 const PORT = 8080;
 const bodyParser = require("body-parser");
 const http = require("http").Server(app);
-const socket = require("socket.io")(http);
+const io = require("socket.io")(http);
 const lodash = require("lodash");
 
 let players = [];
@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
   res.sendFile("index.html");
 });
 
-socket.on("connection", (socket) => {
+io.on("connection", (socket) => {
   socket.on("new player", (id, name) => {
     userId = {
       id,
@@ -31,21 +31,21 @@ socket.on("connection", (socket) => {
       winner: false,
     };
     players.push(userId);
-    socket.emit("players", players);
+    io.emit("players", players);
   });
 
   socket.on("disconnect", (reason) => {
+    console.log(reason)
     players = players.filter((player) => {
       return players !== userId;
     });
-    socket.emit("players", players);
   });
 
   socket.on("roll", () => {
     userId.roll = lodash.random(1, 1000);
     console.log(userId);
   });
-  socket.emit("players", players);
+  io.emit("players", players);
 });
 
 const server = http.listen(PORT, () => {
