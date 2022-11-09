@@ -32,8 +32,16 @@
             btnJoinEl.style.display = "none";
             btnRollEl.style.display = "inline-block"
             userName.textContent = user.value;
+
             const listPlayers = (players) => {
+                userList.innerHTML = "Players Online:"
                 console.log(players);
+                players.forEach((player) => {
+                    let divEl = document.createElement("div");
+                    divEl.textContent = `${player.name} | roll = ${player.roll}`;
+                    divEl.style.color = player.winner ? "green" : "black";
+                    userList.appendChild(divEl)
+                })
             }
             socket.on("players", listPlayers);
         })
