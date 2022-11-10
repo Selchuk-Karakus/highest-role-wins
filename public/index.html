@@ -9,6 +9,7 @@
 
 <body>
     <h1>Welcome to Browser side JavaScript!!!</h1>
+    <h3 id="rounds"></h3>
     <label>Player Name: <span id="userName"></span></label>
     <input name="user" type="text" value="Selchuk">
     <button id="btnJoin">Join</button>
@@ -21,6 +22,7 @@
         const btnJoinEl = document.querySelector("#btnJoin");
         const btnRollEl = document.querySelector("#btnRoll");
         const userList = document.querySelector(".userList");
+        const roundsEl = document.querySelector("#rounds");
 
         btnJoinEl.addEventListener("click", (event) => {
             event.preventDefault();
@@ -34,8 +36,8 @@
             userName.textContent = user.value;
 
             const listPlayers = (players) => {
+                roundsEl.textContent = players.length > 0 ? `Round ${players[0].round}` : `First round 0`;
                 userList.innerHTML = "Players Online:"
-                console.log(players);
                 players.forEach((player) => {
                     let divEl = document.createElement("div");
                     divEl.textContent = `${player.name} | roll = ${player.roll}`;
