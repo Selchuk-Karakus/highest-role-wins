@@ -35,7 +35,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", (reason) => {
-    console.log(reason)
+    console.log(reason);
     players = players.filter((player) => {
       return player !== userId;
     });
@@ -45,8 +45,30 @@ io.on("connection", (socket) => {
   socket.on("roll", () => {
     userId.roll = lodash.random(1, 1000);
     console.log(userId);
+    nextRoundCheck();
   });
   io.emit("players", players);
+
+  const nextRoundCheck = () => {
+    if (players.length > 0) {
+      let ready = 0;
+      let top = 0;
+      let win = 0;
+
+      players.forEach((player, index) => {
+        player.winner = false;
+        if (player.roll) {
+          ready++;
+          if (player.roll && player.roll > top) {
+            win = index;
+            top = player.roll;
+          }
+        }
+      });
+      players[win].winner = true;
+      io.emit("players", players);
+    }
+  };
 });
 
 const server = http.listen(PORT, () => {
