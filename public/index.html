@@ -35,7 +35,7 @@
             btnRollEl.style.display = "inline-block"
             userName.textContent = user.value;
 
-            const listPlayers = (players) => {
+            function listPlayers(players) {
                 roundsEl.textContent = players.length > 0 ? `Round ${players[0].round}` : `First round 0`;
                 userList.innerHTML = "Players Online:"
                 players.forEach((player) => {
@@ -46,11 +46,11 @@
                 })
             }
             socket.on("players", listPlayers);
-        })
+            btnRollEl.addEventListener("click", () => {
+                socket.emit("roll");
+                btnRollEl.disabled = true;
+            })
 
-        btnRollEl.addEventListener("click", () => {
-            socket.emit("roll");
-            btnRollEl.disabled = true;
         })
     </script>
 </body>
