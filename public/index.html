@@ -35,17 +35,26 @@
             btnRollEl.style.display = "inline-block"
             userName.textContent = user.value;
 
+            socket.on("players", listPlayers);
+            socket.on("inplay", checkWinner)
+
+
+            function checkWinner(data) {
+                roundsEl.innerHTML = data;
+                btnRollEl.disabled = false;
+            }
+
             function listPlayers(players) {
                 roundsEl.textContent = players.length > 0 ? `Round ${players[0].round}` : `First round 0`;
                 userList.innerHTML = "Players Online:"
                 players.forEach((player) => {
                     let divEl = document.createElement("div");
-                    divEl.textContent = `${player.name} | roll = ${player.roll}`;
+                    let temp = player.roll == null ? `waiting` : `Roll ${player.roll}`
+                    divEl.textContent = `${player.name} | roll = ${temp}`;
                     divEl.style.color = player.winner ? "green" : "black";
                     userList.appendChild(divEl)
                 })
             }
-            socket.on("players", listPlayers);
             btnRollEl.addEventListener("click", () => {
                 socket.emit("roll");
                 btnRollEl.disabled = true;

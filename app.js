@@ -67,6 +67,17 @@ io.on("connection", (socket) => {
       });
       players[win].winner = true;
       io.emit("players", players);
+
+      if (ready >= players.length) {
+        io.emit("inplay", `Round ${round} winner is ${players[win].name}`);
+        round++;
+
+        players.forEach((player, index) => {
+          player.winner = false;
+          player.roll = null;
+          player.round = round;
+        });
+      }
     }
   };
 });
