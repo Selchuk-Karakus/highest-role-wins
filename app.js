@@ -22,6 +22,7 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
+  let userId;
   socket.on("new player", (id, name) => {
     userId = {
       id,
@@ -69,7 +70,7 @@ io.on("connection", (socket) => {
       io.emit("players", players);
 
       if (ready >= players.length) {
-        io.emit("inplay", `Round ${round} winner is ${players[win].name}`);
+        io.emit("inplay", `Round #${round} winner is ${players[win].name}`);
         round++;
 
         players.forEach((player, index) => {
